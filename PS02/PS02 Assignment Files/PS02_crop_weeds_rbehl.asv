@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENGR 132 
+% Program Description 
+%replace this text with your program decription as a comment
+%
+% Assigment Information
+%   Assignment:     PS 02, Problem 3
+%   Author:         Ranjan Behl, rbehl@purdue.edu
+%   Team ID:        014
+%  	Contributor:    Name, login@purdue [repeat for each]
+%   My contributor(s) helped me:	
+%     [ ] understand the assignment expectations without
+%         telling me how they will approach it.
+%     [ ] understand different ways to think about a solution
+%         without helping me plan my solution.
+%     [ ] think through the meaning of a specific error or
+%         bug present in my code without looking at my code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ____________________
+%% INITIALIZATION
+weeddata = load('Data_weed_percent_fieldA152nF.txt');
+
+%% ____________________
+%% CALCULATIONS
+%Part A
+field_pixels = numel(weeddata); % finding the field pixels of the data set
+
+%Part B
+averagecol = mean(weeddata); % finding the average of each column
+maxaverage = (max(averagecol));% the highest max average
+highestaverage = (find(maxaverage)); % finding the highest average weed percent column indice
+
+%Part C
+field_pixels_dominant = find(weeddata(:,:) < 0.015);% finding the field pixels that are dominant 
+averageweedpercentage_dominant = mean(weeddata(field_pixels_dominant));% finding the average weed percentage of the dominant field pixels 
+numfield_pixels_dominant = numel(field_pixels_dominant); % finding the total number of field pixels that meet the given condications
+
+%Part D
+field_pixels_75to95 =find(weeddata(:,:) >= .75 & weeddata(:,:) <= .95);% finding the field pixels that have 75% to 95% weed percentage
+numfield_pixels_75to95 = numel(field_pixels_75to95);% the total number of field pixels
+
+%Part E
+field_pixels_visualinspection = find(weeddata(:,:) > .95); %finding the field pixels that have weed percentage greater than 95%
+newfield_pixels_visualinspection = 
+field_pixels_location = 
+
+
+%% ____________________
+%% FORMATTED TEXT DISPLAYS
+fprintf('%.2f field pixels are in the data set\n',field_pixels);
+fprintf('The %.2f column has the highest average weed percent with a average weed percent %.2f\n',highestaverage,maxaverage);
+fprintf('There are %.2f dominant field pixels and the average weed percentage is %.2f\n',numfield_pixels_dominant,averageweedpercentage_dominant);
+fprintf('There are %.2f field pixels in the 75 percent to 95 percent category\n',numfield_pixels_75to95);
+%fprintf('The pixel locations that require visual inspection are %f',field_pixels_location);
+
+
+%% ____________________
+%% ACADEMIC INTEGRITY STATEMENT
+% I have not used source code obtained from any other unauthorized
+% source, either modified or unmodified.  Neither have I provided
+% access to my code to another. The code I am submitting
+% is my own original work.

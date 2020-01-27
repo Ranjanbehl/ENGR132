@@ -1,0 +1,219 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>PS03_matrix_magic_rbehl</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-01-30"><meta name="DC.source" content="PS03_matrix_magic_rbehl.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">__________________</a></li><li><a href="#3">INITIALIZATION</a></li><li><a href="#4">__________________</a></li><li><a href="#5">COPY &amp; CONCATENATION</a></li><li><a href="#6">__________________</a></li><li><a href="#7">REPLACE MATRIX ELEMENTS</a></li><li><a href="#8">__________________</a></li><li><a href="#9">FINAL MATRIX</a></li><li><a href="#10">__________________</a></li><li><a href="#11">FORMATTED TEXT DISPLAY</a></li><li><a href="#12">__________________</a></li><li><a href="#13">ACADEMIC INTEGRITY STATEMENT</a></li></ul></div><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% ENGR 132</span>
+<span class="comment">% Program Description</span>
+<span class="comment">%This program was created to use the given martixes and separates specific</span>
+<span class="comment">%points into row vectors, and also concatenates theses row vectors. Then</span>
+<span class="comment">%the final part of the problem replaces martix elements with user input.</span>
+<span class="comment">% Assigment Information</span>
+<span class="comment">%   Assignment:			PS 03, Problem 1</span>
+<span class="comment">%   Author:				Ranjan Behl, rbehl@purdue.edu</span>
+<span class="comment">%   Team ID:			008-14</span>
+<span class="comment">%   Paired Partner:		John Chapla, jchapla@purdue.edu</span>
+<span class="comment">%   Contributor:		Name, login@purdue [repeat for each]</span>
+<span class="comment">%   Our contributor(s) helped us:</span>
+<span class="comment">%     [ ] understand the assignment expectations without</span>
+<span class="comment">%         telling us how they will approach it.</span>
+<span class="comment">%     [ ] understand different ways to think about a solution</span>
+<span class="comment">%         without helping us plan our solution.</span>
+<span class="comment">%     [ ] think through the meaning of a specific error or</span>
+<span class="comment">%         bug present in our code without looking at our code.</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+</pre><h2 id="2">__________________</h2><h2 id="3">INITIALIZATION</h2><pre class="codeinput">A = zeros(4); <span class="comment">% creates the 4 by 4 martix of zeros</span>
+vals = [1,3,2,4;5:8;9:12;13,15,14,16];<span class="comment">% creates the martix for part b of the problem</span>
+</pre><h2 id="4">__________________</h2><h2 id="5">COPY &amp; CONCATENATION</h2><pre class="codeinput"><span class="comment">%a</span>
+M = vals(2:3,2:3);<span class="comment">% the center 2 by 2 martix that is inside vals</span>
+<span class="comment">%b</span>
+C = vals(1,2:3);<span class="comment">% taking the 3 2 from the first row of vals and labeling it as a row vector c</span>
+<span class="comment">%c</span>
+D = vals(4,2:3);<span class="comment">% taking the 15 14</span>
+<span class="comment">%d</span>
+E = [vals(1,1),D,vals(1,4)];<span class="comment">% creating a row vector that concatenates D between the first and fourth elements</span>
+<span class="comment">%e</span>
+F = [vals(4,1),C,vals(4,4)];<span class="comment">% creating a row vector that concatenates C between the first and fourth elements</span>
+</pre><h2 id="6">__________________</h2><h2 id="7">REPLACE MATRIX ELEMENTS</h2><pre class="codeinput"><span class="comment">%a</span>
+A(2:3, 2:3) = M;<span class="comment">% replacing the center 2 x 2 martix of A with M</span>
+A(1,:) = E;<span class="comment">% replacing the first row of A with E</span>
+A(4,:) = F;<span class="comment">% replacing the fourth rwo of A with F</span>
+<span class="comment">%b</span>
+A(2,1) = vals(3,4);<span class="comment">% replaces the 0 directly below the 1 in martix A with the 12 from matrix vals</span>
+A(3,1) = vals(2,4);<span class="comment">% replaces the 0 above the 13 in martix A with the 8 from martix vals</span>
+A(2,4) = vals(3,1);<span class="comment">% replaces the 0 directly below the 4 in martix A with the 9 from martix vals</span>
+A(3,4) = vals(2,1);<span class="comment">% replaces the 0 directly above the 16 in martix A with the 5 from matix vals</span>
+</pre><h2 id="8">__________________</h2><h2 id="9">FINAL MATRIX</h2><pre class="codeinput"><span class="comment">%a</span>
+X = sum(A);<span class="comment">% X is vector that contains the sums of the columns of A</span>
+<span class="comment">%b</span>
+G = [A;X];<span class="comment">% Concatenates vector X to the bottom of martix A to create a new martix G</span>
+<span class="comment">%c</span>
+Y = sum(G);<span class="comment">% Creates a vector Y that contains the sums of the rows of G</span>
+<span class="comment">%d</span>
+Ynew = Y.';<span class="comment">% tranposes the Y vector into a column vector</span>
+Ynew(5,1) = 0; <span class="comment">% creating a zero place holder for Ynew so it can be concatenated with martix G</span>
+H = [G Ynew]; <span class="comment">% concatenates vector Y(in this case its Ynew) to the right of martix G to create a new martix H</span>
+<span class="comment">%e</span>
+H(25) = sum(diag(H)) <span class="comment">% replaces the lower right corner value of H with the sum of the first four values on the diagonal from the upper left corner and moving toward the lower right corner</span>
+</pre><pre class="codeoutput">
+H =
+
+     1    15    14     4    68
+    12     6     7     9    68
+     8    10    11     5    68
+    13     3     2    16    68
+    34    34    34    34    34
+
+</pre><h2 id="10">__________________</h2><h2 id="11">FORMATTED TEXT DISPLAY</h2><pre class="codeinput">fprintf(<span class="string">"\nAfter doing step 8.e, the value in the center of H is %d"</span>,H(13));
+fprintf(<span class="string">"\nAfter doing step 8.e, the value in the upper left of H is %d,and the value in the upper right of H is %d."</span>,H(1),H(21));
+fprintf(<span class="string">"\nAfter doing step 8.e, the value in the lower left of H is %d,and the value in lower right of H is %d."</span>,H(5),H(25));
+</pre><pre class="codeoutput">
+After doing step 8.e, the value in the center of H is 11
+After doing step 8.e, the value in the upper left of H is 1,and the value in the upper right of H is 68.
+After doing step 8.e, the value in the lower left of H is 34,and the value in lower right of H is 34.</pre><h2 id="12">__________________</h2><h2 id="13">ACADEMIC INTEGRITY STATEMENT</h2><p>We have not used source code obtained from any other unauthorized source, either modified or unmodified.  Neither have we provided access to our code to another. The script we are submitting is our own original work.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENGR 132 
+% Program Description 
+%This program was created to use the given martixes and separates specific 
+%points into row vectors, and also concatenates theses row vectors. Then
+%the final part of the problem replaces martix elements with user input.
+% Assigment Information
+%   Assignment:			PS 03, Problem 1
+%   Author:				Ranjan Behl, rbehl@purdue.edu
+%   Team ID:			008-14
+%   Paired Partner:		John Chapla, jchapla@purdue.edu
+%   Contributor:		Name, login@purdue [repeat for each]
+%   Our contributor(s) helped us:	
+%     [ ] understand the assignment expectations without
+%         telling us how they will approach it.
+%     [ ] understand different ways to think about a solution
+%         without helping us plan our solution.
+%     [ ] think through the meaning of a specific error or
+%         bug present in our code without looking at our code.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%% ____________________
+%% INITIALIZATION
+A = zeros(4); % creates the 4 by 4 martix of zeros
+vals = [1,3,2,4;5:8;9:12;13,15,14,16];% creates the martix for part b of the problem
+%% ____________________
+%% COPY & CONCATENATION
+%a
+M = vals(2:3,2:3);% the center 2 by 2 martix that is inside vals
+%b
+C = vals(1,2:3);% taking the 3 2 from the first row of vals and labeling it as a row vector c
+%c
+D = vals(4,2:3);% taking the 15 14 
+%d
+E = [vals(1,1),D,vals(1,4)];% creating a row vector that concatenates D between the first and fourth elements
+%e
+F = [vals(4,1),C,vals(4,4)];% creating a row vector that concatenates C between the first and fourth elements
+%% ____________________
+%% REPLACE MATRIX ELEMENTS
+%a
+A(2:3, 2:3) = M;% replacing the center 2 x 2 martix of A with M
+A(1,:) = E;% replacing the first row of A with E
+A(4,:) = F;% replacing the fourth rwo of A with F
+%b
+A(2,1) = vals(3,4);% replaces the 0 directly below the 1 in martix A with the 12 from matrix vals
+A(3,1) = vals(2,4);% replaces the 0 above the 13 in martix A with the 8 from martix vals
+A(2,4) = vals(3,1);% replaces the 0 directly below the 4 in martix A with the 9 from martix vals
+A(3,4) = vals(2,1);% replaces the 0 directly above the 16 in martix A with the 5 from matix vals
+%% ____________________
+%% FINAL MATRIX
+%a
+X = sum(A);% X is vector that contains the sums of the columns of A
+%b
+G = [A;X];% Concatenates vector X to the bottom of martix A to create a new martix G
+%c
+Y = sum(G);% Creates a vector Y that contains the sums of the rows of G
+%d
+Ynew = Y.';% tranposes the Y vector into a column vector
+Ynew(5,1) = 0; % creating a zero place holder for Ynew so it can be concatenated with martix G
+H = [G Ynew]; % concatenates vector Y(in this case its Ynew) to the right of martix G to create a new martix H
+%e
+H(25) = sum(diag(H)) % replaces the lower right corner value of H with the sum of the first four values on the diagonal from the upper left corner and moving toward the lower right corner
+%% ____________________
+%% FORMATTED TEXT DISPLAY 
+fprintf("\nAfter doing step 8.e, the value in the center of H is %d",H(13));
+fprintf("\nAfter doing step 8.e, the value in the upper left of H is %d,and the value in the upper right of H is %d.",H(1),H(21));
+fprintf("\nAfter doing step 8.e, the value in the lower left of H is %d,and the value in lower right of H is %d.",H(5),H(25));
+ 
+
+
+%% ____________________
+%% ACADEMIC INTEGRITY STATEMENT
+% We have not used source code obtained from any other unauthorized
+% source, either modified or unmodified.  Neither have we provided
+% access to our code to another. The script we are submitting
+% is our own original work.
+
+##### SOURCE END #####
+--></body></html>
